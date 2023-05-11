@@ -12,11 +12,11 @@ st.set_page_config(
     )
 
 #open the pickle file
-generator_loaded = pickle.load(open('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/generator.pkl', 'rb'))
+generator_loaded = pickle.load(open('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/GAN/generator.pkl', 'rb'))
 
 #open the csv file for plotting
-#data = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/portugalFinal.csv', sep = ',')
-data_read = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/FootballLabel.csv', sep = ',')
+#data = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/Datasets/portugalFinal.csv', sep = ',')
+data_read = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/Datasets/FootballLabel.csv', sep = ',')
 
 data = data_read[data_read['label'] != 2]
 
@@ -58,6 +58,8 @@ val_df = pd.DataFrame(inver, columns=team.columns)
 
 df = pd.concat([team, val_df], ignore_index = True)
 df = df.rename(index={0: 'Original Data', 1: 'Improved Data'})
+
+df.loc['Difference'] = df.loc['Improved Data'] - df.loc['Original Data']
 
 #define the column names for the radar plot
 categories = team.columns.tolist()
