@@ -13,7 +13,10 @@ st.set_page_config(
     )
 
 #open the pickle file
-generator_loaded = pickle.load(open('https://github.com/Chrismcq0312/x19317131-Thesis/blob/main/generator.pkl', 'rb'))
+pickle_url = 'https://github.com/Chrismcq0312/x19317131-Thesis/blob/main/generator.pkl'
+response = requests.get(pickle_url)
+pickle_content = response.content
+generator_loaded = pickle.loads(pickle_content)
 
 #open the csv file for plotting
 #data = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/Datasets/portugalFinal.csv', sep = ',')
