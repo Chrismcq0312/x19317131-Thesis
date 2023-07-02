@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import requests
+import urllib
 
 st.set_page_config(
     page_title= 'Football Improvements Radar Plots',
@@ -13,16 +14,27 @@ st.set_page_config(
     )
 
 #open the pickle file
-pickle_url = 'https://github.com/Chrismcq0312/x19317131-Thesis/blob/main/generator.pkl'
-response = requests.get(pickle_url)
-pickle_content = response.content
-generator_loaded = pickle.loads(pickle_content)
+#pickle_url = 'https://github.com/Chrismcq0312/x19317131-Thesis/blob/main/generator.pkl'
+#response = requests.get(pickle_url)
+#pickle_content = response.content
+#generator_loaded = pickle.loads(pickle_content)
+
+url = 'https://github.com/Chrismcq0312/x19317131-Thesis/raw/main/generator.pkl'
+response = requests.get(url)
+response.raise_for_status()  # Check for any download errors
+
+with open('generator.pkl', 'wb') as f:
+    f.write(response.content)
+
+# Load the pickle file
+with open('generator.pkl', 'rb') as f:
+    generator_loaded = pickle.load(f)
 
 #open the csv file for plotting
 #data = pd.read_csv('C:/Users/crmch/OneDrive/Desktop/College/Year 4/Semester 2/Project 2/Datasets/portugalFinal.csv', sep = ',')
-dataset_url = 'https://github.com/Chrismcq0312/x19317131-Thesis/Datasets/FootballLabel.csv'
-response = requests.get(dataset_url)
-data_read = pd.read_csv(pd.compat.StringIO(response.text))
+url  = 'https://github.com/Chrismcq0312/x19317131-Thesis/raw/main/Datasets/FootballLabel.csv'
+response = urllib.request.urlopen(url)
+data_read = pd.read_csv(response, encoding='utf-8')
 
 data = data_read[data_read['label'] != 2]
 
